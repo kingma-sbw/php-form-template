@@ -21,7 +21,7 @@ class FachManager
     public function create( $fach_name, $lb_id )
     {
         try {
-            $stmt = $this->pdo->prepare( "INSERT INTO fach (Fach_Name, LB_ID) VALUES (?, ?)" );
+            $stmt = $this->pdo->prepare( "INSERT INTO fach (fach_Name, lb_id) VALUES (?, ?)" );
             $stmt->execute( [ $fach_name, $lb_id ] );
             return $this->pdo->lastInsertId(); // Die ID des eingefügten Datensatzes zurückgeben
         } catch ( PDOException $e ) {
@@ -33,7 +33,7 @@ class FachManager
     public function findById( $fach_id )
     {
         try {
-            $stmt = $this->pdo->prepare( "SELECT * FROM fach WHERE Fach_ID = ?" );
+            $stmt = $this->pdo->prepare( "SELECT * FROM fach WHERE fach_id = ?" );
             $stmt->execute( [ $fach_id ] );
             return $stmt->fetch();
         } catch ( PDOException $e ) {
@@ -45,7 +45,7 @@ class FachManager
     public function update( $fach_id, $new_fach_name, $new_lb_id )
     {
         try {
-            $stmt = $this->pdo->prepare( "UPDATE fach SET Fach_Name = ?, LB_ID = ? WHERE Fach_ID = ?" );
+            $stmt = $this->pdo->prepare( "UPDATE fach SET fach_Name = ?, lb_id = ? WHERE fach_ID = ?" );
             $stmt->execute( [ $new_fach_name, $new_lb_id, $fach_id ] );
         } catch ( PDOException $e ) {
             trigger_error( "Fehler beim Ändern des Fachnamens: " . $e->getMessage(), E_USER_ERROR );
@@ -56,7 +56,7 @@ class FachManager
     public function delete( $fach_id )
     {
         try {
-            $stmt = $this->pdo->prepare( "DELETE FROM fach WHERE Fach_ID = ?" );
+            $stmt = $this->pdo->prepare( "DELETE FROM fach WHERE fach_id = ?" );
             $stmt->execute( [ $fach_id ] );
         } catch ( PDOException $e ) {
             trigger_error( "Fehler beim Löschen des Faches: " . $e->getMessage(), E_USER_ERROR );

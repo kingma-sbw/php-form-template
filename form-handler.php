@@ -1,50 +1,44 @@
 <?php declare(strict_types=1);
 require './inc/lib.php';
 
-checkParam( [ 'action' ] );
+checkParam( [ 'action' ], $_POST );
 
 require './classes/FachManager.php';
+
 switch($_POST['action']) {
   case 'create':
     create();
+    break;
   case 'update':
     update();
+    break;
   case 'delete':
     delete();
+    break;
+  default:
+    trigger_error( 'unknown action ', E_USER_ERROR );
 }
+// Gehe zurück zum hauptfenster
+header( "Location: /" );
+exit();
 
+
+// action functions
 function create()
 {
-  checkParam( [ 'fach_name', 'lb_id' ] );
-  $fachManager = new FachManager(  );
-  $fachManager->create( $_POST['fach_name'], $_POST['lb_id'] );
+  checkParam( [ 'fach-name', 'lb-id' ], $_POST );
+  $fachManager = new FachManager();
+  $fachManager->create( $_POST['fach-name'], $_POST['lb-id'] );
 }
 function update()
 {
-  checkParam( [ 'fach_id', 'fach_name', 'lb_id' ] );
-  $fachManager = new FachManager(  );
-
-
+  checkParam( [ 'fach-id', 'fach-name', 'lb-id' ], $_POST );
+  $fachManager = new FachManager();
+  $fachManager->update( $_POST['fach-id'], $_POST['fach-name'], $_POST['lb-id'] );
 }
 function delete()
 {
-  checkParam( [ 'fach_id' ] );
-
+  checkParam( [ 'fach-id' ], $_POST );
+  $fachManager = new FachManager();
+  $fachManager->delete( $_POST['fach-id'] );
 }
-// Beispiel für die Verwendung der FachManager-Klasse
-
-
-// Ein neues Fach eintragen
-$new_fach_id = $fachManager->create( 'Mathematik', 123 );
-
-// Ein Fach anhand der ID suchen und ausgeben
-$fach = $fachManager->findById( $new_fach_id );
-print_r( $fach );
-
-// Den Namen eines Fachs aktualisieren
-$fachManager->updateName( $new_fach_id, 'Neuer Fachname' );
-
-// Ein Fach löschen
-$fachManager->delete( $new_fach_id );
-?>
-;

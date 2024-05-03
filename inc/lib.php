@@ -6,12 +6,17 @@ define( 'SETTINGS', getSettings( './settings.ini' ) );
  *
  * @param   $required
  */
-function checkParam( array $required, array $request = $_POST )
+function checkParam( array $required, array $request, ?bool $exact = false )
 {
   $params_check = array_intersect( array_keys( $request ), $required );
-  if( count( $params_check ) !== count( $required ) ) {
+  if( $exact && count( $params_check ) !== count( $required ) ) {
     http_response_code( 403 );
-    trigger_error( "POST not complete", E_USER_ERROR);
+    trigger_error( "POST not complete", E_USER_ERROR );
+  }
+  // not exact but check if parameters are requred
+  if( count( $params_check ) > count( $required ) ) {
+    http_response_code( 403 );
+    trigger_error( "POST not complete", E_USER_ERROR );
   }
 }
 
