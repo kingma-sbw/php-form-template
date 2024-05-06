@@ -64,13 +64,31 @@ class FachManager
     }
     public function findAll(string $where="0=0"): Generator {
         try{
-            $stmt = $this->pdo->prepare( "SELECT * FROM fach WHERE ($where)");
+            $stmt = $this->pdo->prepare( "SELECT * FROM lb_fach WHERE ($where)");
             $stmt->execute();
             while( $row = $stmt->fetch() ) {
                 yield($row);
             }
         } catch ( PDOException $e ) {
             trigger_error( "Fehler beim Suchen des Faches: " . $e->getMessage(), E_USER_ERROR );
+        }
+    }
+    public function makeSelect(int $selected_id, string $table, string $id, string $show): string
+    {
+        try{
+            $stmt = $this->pdo->prepare( "SELECT `$id`, `$show` FROM `$table` ORDER BY `$show`");
+            $stmt->execute();
+            $result = "<select name='$id'>";
+
+            while( $row = $stmt->fetch()) {
+                $selectstring = $selected_id === $row[$id]?'selected':'';
+                $result .= "<option $selectstring value='$id'>{$row[$show]}";
+            }
+            $result .= "</select>";
+            return $result;
+        } catch ( PDOException $e ) {
+            trigger_error( "Fehler beim Suchen des lb: " . $e->getMessage(), E_USER_ERROR );
+            return '';
         }
     }
 }

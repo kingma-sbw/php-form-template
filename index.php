@@ -14,9 +14,9 @@ require './classes/FachManager.php';
 
 <dialog id="new-fach">
   <form method="POST" action="./form-handler.php">
-  <input type="hidden" name="fach-id" id="new-fach-id><br>
-  <input type="text" placeholder="Fachname" name="fach-name" id="new-fach-name"><br>
-  <input type="text" placeholder="LB Id" name="lb-id" id="new-lib-id"><br>
+  <input type="hidden" name="Fach_ID" id="new-fach-id"><br>
+  <input type="text" placeholder="Fachname" name="Fach_Name" id="new-fach-name"><br>
+  <input type="text" placeholder="LB Id" name="LB_ID" id="new-lib-id"><br>
   <button name="action" value="update">Update</button>
 </form>
 </dialog>
@@ -29,10 +29,10 @@ foreach( $fachManager->findAll() as $fach ) {
   echo '<td>';
   echo $fach['Fach_ID'];
   echo '<td>';
-  echo '<a href="./update-fach.php?fach-id=' . $fach['Fach_ID'] . '">';
+  echo '<a href="./update-fach.php?Fach_ID=' . $fach['Fach_ID'] . '">';
   echo $fach['Fach_Name'];
   echo '</a>';
-  echo '<td>' . $fach['LB_ID'];
+  echo '<td>' . $fach['LB_Name'];
   echo '<td>';
   makeDeleteForm( 'fach-id', $fach['Fach_ID'] );
 }
