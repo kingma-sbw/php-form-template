@@ -64,7 +64,7 @@ class FachManager
     }
     public function findAll(string $where="0=0"): Generator {
         try{
-            $stmt = $this->pdo->prepare( "SELECT * FROM lb_fach WHERE ($where)");
+            $stmt = $this->pdo->prepare( "SELECT * FROM lb_fach WHERE ($where) ORDER BY `Fach_Name`");
             $stmt->execute();
             while( $row = $stmt->fetch() ) {
                 yield($row);
@@ -87,6 +87,7 @@ class FachManager
             $stmt = $this->pdo->prepare( "SELECT `$id`, `$show` FROM `$table` ORDER BY `$show`");
             $stmt->execute();
             $result = "<select name='$id'>";
+            $result .= "<option value='0'>";
 
             while( $row = $stmt->fetch()) {
                 $selectstring = $selected_id === $row[$id]?'selected':'';

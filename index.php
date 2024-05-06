@@ -2,13 +2,13 @@
 
 require './inc/lib.php';
 require './classes/FachManager.php';
-
+$fachManager = new FachManager();
 ?>
 
 <h2>new fach</h2>
 <form method="POST" action="./form-handler.php">
-  <input type="text" placeholder="Fachname" name="fach-name"><br>
-  <input type="text" placeholder="LB Id" name="lb-id"><br> 
+  <input type="text" placeholder="Fachname" name="Fach_Name"><br>
+  <?= $fachManager->makeSelect(0, "lb", "LB_ID", "LB_Name") ?>
   <button name="action" value="create">Make</button>
 </form>
 
@@ -22,7 +22,7 @@ require './classes/FachManager.php';
 </dialog>
 <?php
 
-$fachManager = new FachManager();
+
 echo '<table id="fach-table">';
 foreach( $fachManager->findAll() as $fach ) { 
   echo '<tr>';
@@ -34,7 +34,7 @@ foreach( $fachManager->findAll() as $fach ) {
   echo '</a>';
   echo '<td>' . $fach['LB_Name'];
   echo '<td>';
-  makeDeleteForm( 'fach-id', $fach['Fach_ID'] );
+  makeDeleteForm( 'Fach_ID', $fach['Fach_ID'] );
 }
 
 
