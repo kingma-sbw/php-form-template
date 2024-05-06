@@ -5,7 +5,7 @@ require './classes/FachManager.php';
 $fachManager = new FachManager();
 ?>
 
-<h2>new fach</h2>
+<h2>Neues Fach</h2>
 <form method="POST" action="./form-handler.php">
   <input type="text" placeholder="Fachname" name="Fach_Name"><br>
   <?= $fachManager->makeSelect(0, "lb", "LB_ID", "LB_Name") ?>
@@ -23,22 +23,33 @@ $fachManager = new FachManager();
 <?php
 
 
+/**
+ * Liste von Fächer mit LB name (aus der view lb_fach)
+ * Jeder Zeile hat ein tiny-form um ein Datensätz zu löschen an Hand der ID
+ * Und einen Link auf ein update formular
+ */
 echo '<table id="fach-table">';
-foreach( $fachManager->findAll() as $fach ) { 
-  echo '<tr>';
-  echo '<td>';
-  echo $fach['Fach_ID'];
-  echo '<td>';
-  echo '<a href="./update-fach.php?Fach_ID=' . $fach['Fach_ID'] . '">';
-  echo $fach['Fach_Name'];
-  echo '</a>';
-  echo '<td>' . $fach['LB_Name'];
-  echo '<td>';
-  makeDeleteForm( 'Fach_ID', $fach['Fach_ID'] );
+foreach( $fachManager->findAll() as $fach ) {
+  ?>
+  <tr>
+  <td><?= makeDeleteForm( 'Fach_ID', $fach['Fach_ID'] ) ?>
+  <td>
+    <a href="./update-fach.php?Fach_ID=<?= $fach['Fach_ID'] ?>">
+      <?= $fach['Fach_Name'] ?>
+    </a>
+  <td><?= $fach['LB_Name'] ?>
+
+  <?php
 }
 
 
-function makeDeleteForm( string $key, int|string $id )
+/**
+ * Create a form the sends a delete action for a fach table
+ * @param $key the PK to create the delete
+ * @param $id the value of the PK that will be deleted
+ * 
+ */
+function makeDeleteForm( string $key, int|string $id ): void
 {
   ?>
   <form method="POST" action="./form-handler.php">
