@@ -30,7 +30,7 @@ class FachManager
     }
 
     // Funktion zum Suchen eines Faches anhand der ID
-    public function findById( $fach_id )
+    public function findById( $fach_id ): null|array
     {
         try {
             $stmt = $this->pdo->prepare( "SELECT * FROM fach WHERE fach_id = ?" );
@@ -38,6 +38,7 @@ class FachManager
             return $stmt->fetch();
         } catch ( PDOException $e ) {
             trigger_error( "Fehler beim Suchen des Faches: " . $e->getMessage(), E_USER_ERROR );
+            return null;
         }
     }
 
