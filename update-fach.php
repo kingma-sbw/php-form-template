@@ -13,10 +13,11 @@ $fach = $fachManager->findById($_GET['Fach_ID']);
 <script type="module" src="./scripts/main.js"></script>
 <h2>Update Fach</h2>
 <form method="POST" action="./form-handler.php">
+
   <input type="hidden" name="Fach_ID" value="<?= $_GET['Fach_ID'] ?>">
   <input type="text" placeholder="Fachname" name="Fach_Name" value="<?= $fach['Fach_Name'] ?>" size="50"><br>
   <?= $fachManager->makeSelect($fach['LB_ID'], "lb", "LB_ID", "LB_Name") ?>
-  <input type="text" placeholder="LB Id" name="LB_ID" value="<?= $fach['LB_ID'] ?>"><br> 
+
   <button name="action" value="update">Update</button>
 </form>
 

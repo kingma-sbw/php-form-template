@@ -73,6 +73,14 @@ class FachManager
             trigger_error( "Fehler beim Suchen des Faches: " . $e->getMessage(), E_USER_ERROR );
         }
     }
+    /**
+     * @param $selected_id the value of the selectedoption
+     * @param $table the name of the table
+     * @param $id the name of the id attribute in the table
+     * @param $show the name of the attribute that should be shown in the list
+     * 
+     * @return string
+     */
     public function makeSelect(int $selected_id, string $table, string $id, string $show): string
     {
         try{
@@ -82,12 +90,12 @@ class FachManager
 
             while( $row = $stmt->fetch()) {
                 $selectstring = $selected_id === $row[$id]?'selected':'';
-                $result .= "<option $selectstring value='$id'>{$row[$show]}";
+                $result .= "<option $selectstring value='{$row[$id]}'>{$row[$show]}";
             }
             $result .= "</select>";
             return $result;
         } catch ( PDOException $e ) {
-            trigger_error( "Fehler beim Suchen des lb: " . $e->getMessage(), E_USER_ERROR );
+            trigger_error( "Fehler beim Suchen des $table: " . $e->getMessage(), E_USER_ERROR );
             return '';
         }
     }
