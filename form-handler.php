@@ -40,5 +40,5 @@ function delete()
 {
   checkParam( [ 'Fach_ID' ], $_POST );
   $fachManager = new FachManager();
-  $fachManager->delete( $_POST['Fach_ID'] );
+  $fachManager->delete( (int)$_POST['Fach_ID'] );
 }
