@@ -65,5 +65,5 @@ Show a form for a new entry and the current list
 # update-fach.php
 Show a form to update an existing Fach
 
-# form-handler.php
+# fach-handler.php
 Uses the `FachManager` to create, retrieve, update and delete a fach

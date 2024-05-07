@@ -14,7 +14,7 @@ if( $fach = $fachManager->findById( (int) $_GET['Fach_ID'] ) ) :
   ?>
   <script type="module" src="./scripts/main.js"></script>
   <h2>Update Fach</h2>
-  <form method="POST" action="./form-handler.php">
+  <form method="POST" action="./fach-handler.php">
 
     <input type="hidden" name="Fach_ID" value="<?= $_GET['Fach_ID'] ?>">
     <input type="text" placeholder="Fachname" name="Fach_Name" value="<?= $fach['Fach_Name'] ?>" size="50"><br>
