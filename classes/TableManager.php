@@ -77,7 +77,7 @@ abstract class TableManager
      *
      * @param $id
      */
-    public function delete( int $id )
+    public function delete( int|array $id )
     {
         try {
             $stmt = $this->pdo->prepare( "DELETE FROM `{$this->tableName}` WHERE `{$this->primaryKeyName}` = ?" );

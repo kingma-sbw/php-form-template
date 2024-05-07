@@ -5,7 +5,7 @@ class LbManager extends TableManager
 {
   public function __construct()
   {
-    parent::__construct("lb", "LB_ID");
+    parent::__construct("lb", "lb_id");
   }
   
     /**
