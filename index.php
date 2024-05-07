@@ -8,14 +8,14 @@ $lbManager = new LbManager();
 ?>
 
 <h2>Neues Fach</h2>
-<form method="POST" action="./form-handler.php">
+<form method="POST" action="./fach-handler.php">
   <input type="text" placeholder="Fachname" name="Fach_Name"><br>
   <?= $lbManager->makeSelect(0, "LB_Name") ?>
   <button name="action" value="create">Make</button>
 </form>
 
 <dialog id="new-fach">
-  <form method="POST" action="./form-handler.php">
+  <form method="POST" action="./fach-handler.php">
   <input type="hidden" name="Fach_ID" id="new-fach-id"><br>
   <input type="text" placeholder="Fachname" name="Fach_Name" id="new-fach-name"><br>
   <input type="text" placeholder="LB Id" name="LB_ID" id="new-lib-id"><br>
@@ -54,7 +54,7 @@ foreach( $fachManager->findAll() as $fach ) {
 function makeDeleteForm( string $key, int|string $id ): void
 {
   ?>
-  <form method="POST" action="./form-handler.php">
+  <form method="POST" action="./fach-handler.php">
     <input type="hidden" name="<?= $key ?>" value="<?= $id ?>">
     <button name="action" value="delete">Delete</button>
   </form> <?php
