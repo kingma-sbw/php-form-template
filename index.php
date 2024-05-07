@@ -2,13 +2,15 @@
 
 require './inc/lib.php';
 require './classes/FachManager.php';
+require './classes/LbManager.php';
 $fachManager = new FachManager();
+$lbManager = new LbManager();
 ?>
 
 <h2>Neues Fach</h2>
 <form method="POST" action="./form-handler.php">
   <input type="text" placeholder="Fachname" name="Fach_Name"><br>
-  <?= $fachManager->makeSelect(0, "lb", "LB_ID", "LB_Name") ?>
+  <?= $lbManager->makeSelect(0, "LB_Name") ?>
   <button name="action" value="create">Make</button>
 </form>
 
