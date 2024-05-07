@@ -22,8 +22,9 @@ function checkParam( array $required, array $request, ?bool $exact = false )
 
 function getSettings( string $settingsFileName ): array
 {
-  $settings        = parse_ini_file( $settingsFileName, true );
-  $settings['dsn'] = sprintf( "mysql:host=%s;dbname=%s", $settings['db']['host'], $settings['db']['name'] );
+  $settings              = parse_ini_file( $settingsFileName, true );
+  // add the dsn for easy connection
+  $settings['db']['dsn'] = sprintf( "mysql:host=%s;dbname=%s", $settings['db']['host'], $settings['db']['name'] );
 
   return $settings;
 }
