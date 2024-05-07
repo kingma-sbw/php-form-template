@@ -9,20 +9,19 @@ class FachManager extends TableManager
      */
     public function __construct()
     {
-        parent::__construct( "fach", "Fach_ID" );
+        parent::__construct( "fach", "fach_id" );
     }
 
     /**
      * Update the record with the specifed ID
      *
      * @param $fach_id
-     * @param $new_fach_name
-     * @param $new_lb_id
+     * @param $new_values fach_name, lb_id
      */
     public function update( $fach_id, ...$new_values ): void
     {
         try {
-            $stmt = $this->pdo->prepare( "UPDATE `{$this->tableName}` SET fach_Name = ?, lb_id = ? WHERE `$this->primaryKeyName` = ?" );
+            $stmt = $this->pdo->prepare( "UPDATE `{$this->tableName}` SET fach_name = ?, lb_id = ? WHERE `$this->primaryKeyName` = ?" );
             array_push( $new_values, $fach_id );
             $stmt->execute( $new_values );
         } catch ( PDOException $e ) {
