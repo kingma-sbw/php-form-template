@@ -6,11 +6,10 @@ abstract class TableManager
 
     /**
      * constructor connects to the database using the settings.ini file with connection details
-     * @endcode
      */
     public function __construct(
         readonly string $tableName,
-        readonly string $primaryKeyName )
+        readonly array|string $primaryKeyName )
     {
         try {
 
@@ -43,7 +42,7 @@ abstract class TableManager
      * @param $fach_id
      * @return null|array null if nothing found, otherwise associative array
      */
-    public function findById( int $id ): null|array
+    public function findById( int|array $id ): null|array
     {
         try {
             $stmt = $this->pdo->prepare( "SELECT * FROM `{$this->tableName}` WHERE `{$this->primaryKeyName}` = ?" );
@@ -72,7 +71,7 @@ abstract class TableManager
         }
     }
 
-    abstract public function update( $id, ...$new_values ): void;
+    abstract public function update( int|array $id, ...$new_values ): void;
     /**
      * Delete record by ID
      *
