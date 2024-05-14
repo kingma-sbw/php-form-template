@@ -1,6 +1,6 @@
 # php-form-template
-Template project for easy developement
 
+Template project for easy developement
 
 Tables `fach`,`lb` and view `lb_fach` created as
 
@@ -40,7 +40,6 @@ class TableNameManager extends TableManager
 }
 ```
 
-
 ## Class FachManager
 
 ### constructor
@@ -63,7 +62,7 @@ Updates the Fach with the specified fields and ID
 
 Deletes the Fach with the specified ID
 
-### findAll 
+### findAll
 
 Generator to return all entries as associative array in Fach sorted by Fach_Name
 use like
@@ -76,8 +75,7 @@ foreach( $fachManager->findAll() as $fach) {
 
 ### makeSelect
 
-Create a html `<SELECT>` with all rows in the $table, showing the attribute $show and using $id as the id. 
-The list is shorted by $show and the selected elemeent is specified by $selected_id. The first entry has `id=0` and is empty
+Create a html `<SELECT>` with all rows in the $table, showing the attribute $show and using $id as the id. The list is shorted by $show and the selected elemeent is specified by $selected_id. The first entry has `id=0` and is empty
 
 ## index.php
 
