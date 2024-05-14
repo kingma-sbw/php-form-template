@@ -1,5 +1,26 @@
 <?php declare(strict_types=1);
 
+/**
+ * TableManager abstract class for CRUD (Create Retrieve Update Delete actions)
+ * use with SomeTableManager extends TableManager
+ *
+ * for the ...newvalues make sure to put them in the same order as the columns in the table!
+ * 
+ * only update must be defined as we don't know the exact colum nnames (replace col1, col2 etc.)
+ * 
+    public function update( $id, ...$new_values ): void
+    {
+        try {
+            $stmt = $this->pdo->prepare( "UPDATE {$this->tableName} SET col1 = ?, col2 = ? WHERE {$this->primaryKeyName} = ?" );
+            // set id as last element
+            array_push( $new_values, $id ); // put the id at the end of the array of values
+            $stmt->execute( $new_values );
+        } catch ( PDOException $e ) {
+            trigger_error( "Fehler beim Ändern der Tabelle: " . $e->getMessage(), E_USER_ERROR );
+        }
+    }
+
+ */
 abstract class TableManager
 {
     protected $pdo;
