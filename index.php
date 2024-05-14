@@ -4,8 +4,7 @@ require './inc/lib.php';
 /**
  * manager für Tabelle fach und lb
  */
-$fachManager = new FachManager();
-$lbManager   = new LbManager();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +13,7 @@ $lbManager   = new LbManager();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fach LB</title>
-  <link rel="stylesheet" href="./styles/main.css">
+  <link href="./styles/main.css">
 </head>
 
 <body>
@@ -26,8 +25,8 @@ $lbManager   = new LbManager();
   ?>
   <h2>Neues Fach</h2>
   <form method="POST" action="./fach-handler.php">
-    <input type="text" placeholder="Fachname" name="Fach_Name"><br>
-    <?= $lbManager->makeSelect( 0, "LB_Name" ) ?>
+    <input type="text" placeholder="!!!some placehold" name="!!! some fieldname"><br>
+    <?= /* makeSelect() */ ?>
     <button name="action" value="create">Make</button>
   </form>
 
@@ -38,18 +37,13 @@ $lbManager   = new LbManager();
    * Und einen Link auf das update formular
    */
   ?>
-  <table id="fach-table">
-    <?php foreach( $fachManager->findAll() as $fach ) : ?>
+  <table id="data-table">
+    <?php foreach( /*$manager->findAll() as $record*/ ) : ?>
 
       <tr>
-        <td><?= TableManager::makeDeleteForm( 'Fach_ID', $fach['Fach_ID'] ) ?></td>
-        <td>
-          <a href="./fach-update.php?Fach_ID=<?= $fach['Fach_ID'] ?>">
-            <?= $fach['Fach_Name'] ?>
-          </a>
-        </td>
-        <td><?= $fach['LB_Name'] ?></td>
+        <td><?= $record['!!!show this field'] ?></td>
       </tr>
+
     <?php endforeach; ?>
   </table>
 </body>

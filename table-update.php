@@ -2,12 +2,7 @@
 
 require './inc/lib.php';
 
-checkParam( [ 'Fach_ID' ], $_GET );
-/**
- * manager für Tabelle fach und lb
- */
-$fachManager = new FachManager();
-$lbManager   = new LbManager();
+checkParam( [ '!!some form id' ], $_GET );
 
 ?>
 <!DOCTYPE html>
@@ -16,13 +11,13 @@ $lbManager   = new LbManager();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="./styles/main.css">
+  <title>Update</title>
+  <link href="./styles/main.css">
 </head>
 
 <body>
 
-  <?php if( $fach = $fachManager->findById( (int) $_GET['Fach_ID'] ) ) : ?>
+  <?php if( /* findById() */ ) : ?>
     <?php
     /**
      * Update Formular für fach
@@ -32,9 +27,9 @@ $lbManager   = new LbManager();
     <h2>Update Fach</h2>
     <form method="POST" action="./fach-handler.php">
 
-      <input type="hidden" name="Fach_ID" value="<?= $_GET['Fach_ID'] ?>">
-      <input type="text" placeholder="Fachname" name="Fach_Name" value="<?= $fach['Fach_Name'] ?>" size="50"><br>
-      <?= $lbManager->makeSelect( $fach['LB_ID'], "LB_Name" ) ?>
+      <input type="hidden" name="Fach_ID" value="<?= $_GET['!!soem form id'] ?>">
+      <input type="text" placeholder="Fachname" name="!!some name!" value="<?= $table['!!some table field!'] ?>" size="50"><br>
+      <?= /* makeSelect(  ) */ ?>
 
       <button name="action" value="update">Update</button>
     </form>

@@ -25,18 +25,15 @@ exit();
 function create()
 {
   checkParam( [ 'Fach_Name', 'LB_ID' ], $_POST );
-  $fachManager = new FachManager();
-  $fachManager->create( $_POST['Fach_Name'], $_POST['LB_ID'] );
+
 }
 function update()
 {
   checkParam( [ 'Fach_ID', 'Fach_Name', 'LB_ID' ], $_POST );
-  $fachManager = new FachManager();
-  $fachManager->update( $_POST['Fach_ID'], $_POST['Fach_Name'], $_POST['LB_ID'] );
+
 }
 function delete()
 {
   checkParam( [ 'Fach_ID' ], $_POST );
-  $fachManager = new FachManager();
-  $fachManager->delete( (int)$_POST['Fach_ID'] );
+
 }
