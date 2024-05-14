@@ -18,7 +18,7 @@ function checkParam( array $required, array $request, ?bool $exact = false )
     trigger_error( "POST not complete", E_USER_ERROR );
   }
   // not exact but check if parameters are required
-  if( count( $params_check ) > count( $required ) ) {
+  if( count( $params_check ) < count( $required ) ) {
     http_response_code( 403 );
     trigger_error( "POST not complete", E_USER_ERROR );
   }
