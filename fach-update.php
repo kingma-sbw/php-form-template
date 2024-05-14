@@ -3,6 +3,9 @@
 require './inc/lib.php';
 
 checkParam( [ 'Fach_ID' ], $_GET );
+/**
+ * manager für Tabelle fach und lb
+ */
 $fachManager = new FachManager();
 $lbManager   = new LbManager();
 
@@ -20,7 +23,12 @@ $lbManager   = new LbManager();
 <body>
 
   <?php if( $fach = $fachManager->findById( (int) $_GET['Fach_ID'] ) ) : ?>
-
+    <?php
+    /**
+     * Update Formular für fach
+     * Auswahl der LB aus Table lb LbManager
+     */
+    ?>
     <h2>Update Fach</h2>
     <form method="POST" action="./fach-handler.php">
 

@@ -1,7 +1,9 @@
 <?php declare(strict_types=1);
 
 require './inc/lib.php';
-
+/**
+ * manager für Tabelle fach und lb
+ */
 $fachManager = new FachManager();
 $lbManager   = new LbManager();
 ?>
@@ -16,7 +18,12 @@ $lbManager   = new LbManager();
 </head>
 
 <body>
-
+  <?php
+  /**
+   * Erstelle neues Fach mit Formular
+   * Auswahl der LB aus Table lb LbManager
+   */
+  ?>
   <h2>Neues Fach</h2>
   <form method="POST" action="./fach-handler.php">
     <input type="text" placeholder="Fachname" name="Fach_Name"><br>
