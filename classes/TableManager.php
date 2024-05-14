@@ -133,4 +133,18 @@ abstract class TableManager
             return '';
         }
     }
+    /**
+     * Create a form the sends a delete action for a fach table
+     * @param $id_name the name of form variable to hold the key
+     * @param $id the value of the PK that will be deleted
+     * 
+     */
+    public static function makeDeleteForm( string $id_name, int|string $id ): void
+    {
+        ?>
+        <form method="POST" action="./fach-handler.php">
+            <input type="hidden" name="<?= $id_name ?>" value="<?= $id ?>">
+            <button name="action" value="delete">Delete</button>
+        </form> <?php
+    }
 }

@@ -26,7 +26,7 @@ echo '<table id="fach-table">';
 foreach( $fachManager->findAll() as $fach ) {
   ?>
   <tr>
-  <td><?= makeDeleteForm( 'Fach_ID', $fach['Fach_ID'] ) ?>
+  <td><?= TableManager::makeDeleteForm( 'Fach_ID', $fach['Fach_ID'] ) ?>
   <td>
     <a href="./update-fach.php?Fach_ID=<?= $fach['Fach_ID'] ?>">
       <?= $fach['Fach_Name'] ?>
@@ -37,17 +37,3 @@ foreach( $fachManager->findAll() as $fach ) {
 }
 
 
-/**
- * Create a form the sends a delete action for a fach table
- * @param $key the PK to create the delete
- * @param $id the value of the PK that will be deleted
- * 
- */
-function makeDeleteForm( string $key, int|string $id ): void
-{
-  ?>
-  <form method="POST" action="./fach-handler.php">
-    <input type="hidden" name="<?= $key ?>" value="<?= $id ?>">
-    <button name="action" value="delete">Delete</button>
-  </form> <?php
-}
