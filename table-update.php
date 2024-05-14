@@ -2,7 +2,14 @@
 
 require './inc/lib.php';
 
-checkParam( [ '!!some form id' ], $_GET );
+checkParam( [ 'id' ], $_GET );
+$id = $_GET['id'];
+
+/*
+$myTableManager = new MyTableManager();
+$record = $myTableManager->findById($id);
+$otherTableManager = new OtherTableManager();
+*/
 
 ?>
 <!DOCTYPE html>
@@ -17,7 +24,10 @@ checkParam( [ '!!some form id' ], $_GET );
 
 <body>
 
-  <?php if( /* findById() */ ) : ?>
+  <?php if( $record ) : 
+    $Oldvalue1 = $record['!!fieldname1'];
+    $OldValue2 = $record['!!fieldname2'];
+  ?>
     <?php
     /**
      * Update Formular für fach
@@ -27,16 +37,17 @@ checkParam( [ '!!some form id' ], $_GET );
     <h2>Update Fach</h2>
     <form method="POST" action="./fach-handler.php">
 
-      <input type="hidden" name="Fach_ID" value="<?= $_GET['!!soem form id'] ?>">
-      <input type="text" placeholder="Fachname" name="!!some name!" value="<?= $table['!!some table field!'] ?>" size="50"><br>
-      <?= /* makeSelect(  ) */ ?>
+      <input type="hidden" name="!!PK Name" value="<?= $id ?>">
+      <input type="text" placeholder="Somefield1" name="!!sfieldname1" value="<?= $OldValue1 ?>" size="50"><br>
+      <input type="text" placeholder="Somefield2" name="!!sfieldname2" value="<?= $OldValue2 ?>" size="50"><br>
+      <?= /* $otherTableManager->makeSelect( $oldForeinKey, 'Showfield' ) */ ?>
 
       <button name="action" value="update">Update</button>
     </form>
 
 
   <?php else : ?>
-    <h2>Fach nicht gefunden</h2>
+    <h2>Datensatz nicht gefunden</h2>
   <?php endif; ?>
 </body>
 
