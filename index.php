@@ -19,8 +19,8 @@ $lbManager = new LbManager();
 
 /**
  * Liste von Fächer mit LB name (aus der view lb_fach)
- * Jeder Zeile hat ein tiny-form um ein Datensätz zu löschen an Hand der ID
- * Und einen Link auf ein update formular
+ * Jeder Zeile hat ein tiny-form um ein Datensätz zu löschen an Hand der ID (makeDeleteForm)
+ * Und einen Link auf das update formular
  */
 echo '<table id="fach-table">';
 foreach( $fachManager->findAll() as $fach ) {
