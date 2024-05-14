@@ -13,13 +13,18 @@ function checkParam( array $required, array $request, ?bool $exact = false )
     http_response_code( 403 );
     trigger_error( "POST not complete", E_USER_ERROR );
   }
-  // not exact but check if parameters are requred
+  // not exact but check if parameters are required
   if( count( $params_check ) > count( $required ) ) {
     http_response_code( 403 );
     trigger_error( "POST not complete", E_USER_ERROR );
   }
 }
-
+/**
+ * Undocumented function
+ *
+ * @param  $settingsFileName File name of the settings file
+ * @return array
+ */
 function getSettings( string $settingsFileName ): array
 {
   $settings              = parse_ini_file( $settingsFileName, true );
