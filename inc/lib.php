@@ -1,6 +1,10 @@
 <?php declare(strict_types=1);
-define( 'SETTINGS', getSettings( './settings.ini' ) );
-
+if( !defined( 'ROOT' ) ) {
+  define( 'ROOT', $_SERVER['DOCUMENT_ROOT'] . '/' );
+}
+if( !defined( 'SETTINGS' ) ) {
+  define( 'SETTINGS', getSettings( './settings.ini' ) );
+}
 /**
  * checkParam Check if parameters are set
  *
@@ -27,9 +31,21 @@ function checkParam( array $required, array $request, ?bool $exact = false )
  */
 function getSettings( string $settingsFileName ): array
 {
-  $settings              = parse_ini_file( $settingsFileName, true );
+  $settings = parse_ini_file( $settingsFileName, true );
   // add the dsn for easy connection
   $settings['db']['dsn'] = sprintf( "mysql:host=%s;dbname=%s", $settings['db']['host'], $settings['db']['name'] );
 
   return $settings;
 }
+
+/**
+ * Autoloader
+ */
+spl_autoload_register( function (string $class_name) {
+  $class_name = str_replace( '\\', '/', $class_name );
+  $filename   = ROOT . '/classes/' . $class_name . '.php';
+  if( file_exists( $filename ) ) {
+    require $filename;
+    return;
+  }
+} );

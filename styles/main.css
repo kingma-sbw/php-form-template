@@ -1,0 +1,49 @@
+/* Default to border-box */
+:root {
+  box-sizing: border-box;
+}
+/* ...but make it overidable */
+*, *:after, *:before {
+  box-sizing: inherit;
+}
+
+
+/* Remove default margin */
+body,
+h1,h2,h3,h4,p,
+figure,
+blockquote,
+dl,dd {
+  margin: 0;
+}
+
+/* slightly smaller line-height for titels */
+h1, h2, h3, h4,
+button, input, label {
+  line-height: 1.1;
+}
+
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
