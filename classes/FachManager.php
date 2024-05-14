@@ -21,7 +21,7 @@ class FachManager extends TableManager
     public function update( $fach_id, ...$new_values ): void
     {
         try {
-            $stmt = $this->pdo->prepare( "UPDATE `{$this->tableName}` SET fach_name = ?, lb_id = ? WHERE `$this->primaryKeyName` = ?" );
+            $stmt = $this->pdo->prepare( "UPDATE `{$this->tableName}` SET Fach_Name = ?, LB_ID = ? WHERE `$this->primaryKeyName` = ?" );
             array_push( $new_values, $fach_id );
             $stmt->execute( $new_values );
         } catch ( PDOException $e ) {
@@ -31,6 +31,7 @@ class FachManager extends TableManager
 
     /**
      * findAll Generator to list all records, in this case we use the view instead of the table
+     * we use our own and not the TableMaanger one as we want to list from a view, not the actual table
      *
      * @param $where if empty list all, otherwise used as where clause
      */
