@@ -27,43 +27,66 @@ select
   `lb`.`LB_Name` AS `LB_Name`
 from `fach`
 join `lb` on(`lb`.`LB_ID` = `fach`.`LB_ID`);
-
 ```
 
-# Class FachManager
-## constructor
+## Abstract Class TableManager
+
+```php
+class TableNameManager extends TableManager
+{
+  function update( $id, ...newvalues) {
+    // copy aus TableManager
+  }
+}
+```
+
+
+## Class FachManager
+
+### constructor
+
 Connects to database according the DB connection in settings.ini
 
-## create
+### create
+
 Creates a new Fach, mit fach_name und lb_id
 
-## findById
+### findById
+
 Search a Fach by the specifed ID and returns an associativ array or a null value
 
-## update
+### update
+
 Updates the Fach with the specified fields and ID
 
-## delete
+### delete
+
 Deletes the Fach with the specified ID
 
-## findAll 
+### findAll 
+
 Generator to return all entries as associative array in Fach sorted by Fach_Name
-use liek
+use like
+
 ```php
 foreach( $fachManager->findAll() as $fach) {
   echo $fach['Fach_Name'];
 }
 ```
 
-## makeSelect
+### makeSelect
+
 Create a html `<SELECT>` with all rows in the $table, showing the attribute $show and using $id as the id. 
 The list is shorted by $show and the selected elemeent is specified by $selected_id. The first entry has `id=0` and is empty
 
-# index.php
+## index.php
+
 Show a form for a new entry and the current list
 
-# update-fach.php
+## #update-fach.php
+
 Show a form to update an existing Fach
 
-# fach-handler.php
+## fach-handler.php
+
 Uses the `FachManager` to create, retrieve, update and delete a fach

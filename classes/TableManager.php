@@ -8,18 +8,6 @@
  * 
  * only update must be defined as we don't know the exact colum nnames (replace col1, col2 etc.)
  * 
-    public function update( $id, ...$new_values ): void
-    {
-        try {
-            $stmt = $this->pdo->prepare( "UPDATE {$this->tableName} SET col1 = ?, col2 = ? WHERE {$this->primaryKeyName} = ?" );
-            // set id as last element
-            array_push( $new_values, $id ); // put the id at the end of the array of values
-            $stmt->execute( $new_values );
-        } catch ( PDOException $e ) {
-            trigger_error( "Fehler beim Ändern der Tabelle: " . $e->getMessage(), E_USER_ERROR );
-        }
-    }
-
  */
 abstract class TableManager
 {
@@ -93,6 +81,19 @@ abstract class TableManager
     }
 
     abstract public function update( int|array $id, ...$new_values ): void;
+    /*
+    {
+        try {
+            $stmt = $this->pdo->prepare( "UPDATE {$this->tableName} SET col1 = ?, col2 = ? WHERE {$this->primaryKeyName} = ?" );
+            // set id as last element
+            array_push( $new_values, $id ); // put the id at the end of the array of values
+            $stmt->execute( $new_values );
+        } catch ( PDOException $e ) {
+            trigger_error( "Fehler beim Ändern der Tabelle: " . $e->getMessage(), E_USER_ERROR );
+        }
+    }
+    */
+
     /**
      * Delete record by ID
      *
