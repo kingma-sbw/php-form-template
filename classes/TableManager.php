@@ -11,7 +11,7 @@
  */
 abstract class TableManager
 {
-    abstract public function update( int|array $id, ...$new_values ): void;
+    abstract public function update( int|string $id, ...$new_values ): void;
     /*
     {
         try {
@@ -64,7 +64,7 @@ abstract class TableManager
      * @param $fach_id
      * @return null|array null if nothing found, otherwise associative array
      */
-    public function findById( int|array $id ): null|array
+    public function findById( int|string $id ): null|array
     {
         try {
             $stmt = $this->pdo->prepare( "SELECT * FROM `{$this->tableName}` WHERE `{$this->primaryKeyName}` = ?" );
@@ -100,7 +100,7 @@ abstract class TableManager
      *
      * @param $id
      */
-    public function delete( int $id )
+    public function delete( int|string $id )
     {
         try {
             $stmt = $this->pdo->prepare( "DELETE FROM `{$this->tableName}` WHERE `{$this->primaryKeyName}` = ?" );
