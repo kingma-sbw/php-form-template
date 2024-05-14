@@ -12,10 +12,10 @@
 abstract class TableManager
 {
     abstract public function update( int|string $id, ...$new_values ): void;
-    /*
+    /* change col1 = ?, col2 = ?, ...  with the proper fields in the right order
     {
         try {
-            $stmt = $this->pdo->prepare( "UPDATE {$this->tableName} SET col1 = ?, col2 = ? WHERE {$this->primaryKeyName} = ?" );
+            $stmt = $this->pdo->prepare( "UPDATE {$this->tableName} SET col1 = ?, col2 = ?, ... WHERE {$this->primaryKeyName} = ?" );
             // set id as last element
             array_push( $new_values, $id ); // put the id at the end of the array of values
             $stmt->execute( $new_values );
@@ -80,10 +80,10 @@ abstract class TableManager
      *
      * @param $where if empty list all, otherwise used as where clause
      */
-    public function findAll( string $where = "0=0" ): Generator
+    public function findAll( string $order = null, string $where = "0=0" ): Generator
     {
         try {
-            $stmt = $this->pdo->prepare( "SELECT * FROM `{$this->tableName}` WHERE ($where)" );
+            $stmt = $this->pdo->prepare( "SELECT * FROM `{$this->tableName}` WHERE ($where) " . ($order?"ORDER BY $order":) );
             $stmt->execute();
             while( $row = $stmt->fetch() ) {
                 yield ( $row );
