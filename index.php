@@ -1,8 +1,7 @@
 <?php declare(strict_types=1);
 
 require './inc/lib.php';
-require './classes/FachManager.php';
-require './classes/LbManager.php';
+
 $fachManager = new FachManager();
 $lbManager   = new LbManager();
 ?>
@@ -38,7 +37,7 @@ $lbManager   = new LbManager();
       <tr>
         <td><?= TableManager::makeDeleteForm( 'Fach_ID', $fach['Fach_ID'] ) ?></td>
         <td>
-          <a href="./update-fach.php?Fach_ID=<?= $fach['Fach_ID'] ?>">
+          <a href="./fach-update.php?Fach_ID=<?= $fach['Fach_ID'] ?>">
             <?= $fach['Fach_Name'] ?>
           </a>
         </td>

@@ -79,11 +79,11 @@ Create a html `<SELECT>` with all rows in the $table, showing the attribute $sho
 
 ## index.php
 
-Show a form for a new entry and the current list
+Show a form for a new entry and the current list. Send post to fach-handler.php
 
-## #update-fach.php
+## fach-update.php
 
-Show a form to update an existing Fach
+Show a form to update an existing Fach. Send post to fach-handler.php
 
 ## fach-handler.php
 

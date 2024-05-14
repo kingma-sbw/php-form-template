@@ -3,8 +3,6 @@ require './inc/lib.php';
 
 checkParam( [ 'action' ], $_POST );
 
-require './classes/FachManager.php';
-
 switch($_POST['action']) {
   case 'create':
     create();
