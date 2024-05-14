@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
 require './inc/lib.php';
-/**
- * manager für Tabelle fach und lb
- */
+/*
+$myTableManger = new MyTableManager();
+*/
 
 ?>
 <!DOCTYPE html>
@@ -19,14 +19,13 @@ require './inc/lib.php';
 <body>
   <?php
   /**
-   * Erstelle neues Fach mit Formular
-   * Auswahl der LB aus Table lb LbManager
+   * Erstelle neues Record mit Formular
    */
   ?>
   <h2>Neues Fach</h2>
-  <form method="POST" action="./fach-handler.php">
-    <input type="text" placeholder="!!!some placehold" name="!!! some fieldname"><br>
-    <?= /* makeSelect() */ ?>
+  <form method="POST" action="./table-handler.php">
+    <input type="text" placeholder="!!!some placeholder" name="!!! some fieldname"><br>
+
     <button name="action" value="create">Make</button>
   </form>
 
@@ -38,7 +37,7 @@ require './inc/lib.php';
    */
   ?>
   <table id="data-table">
-    <?php foreach( /*$manager->findAll() as $record*/ ) : ?>
+    <?php foreach( $myTableManager->findAll() as $record ) : ?>
 
       <tr>
         <td><?= $record['!!!show this field'] ?></td>
