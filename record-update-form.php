@@ -37,7 +37,7 @@ $otherTableManager = new OtherTableManager();
     <h2>Update Fach</h2>
     <form method="POST" action="./fach-handler.php">
 
-      <input type="hidden" name="!!PK Name" value="<?= $id ?>">
+      <input type="hidden" name="id" value="<?= $id ?>">
       <input type="text" placeholder="Somefield1" name="!!sfieldname1" value="<?= $OldValue1 ?>" size="50"><br>
       <input type="text" placeholder="Somefield2" name="!!sfieldname2" value="<?= $OldValue2 ?>" size="50"><br>
       <?= /* $otherTableManager->makeSelect( $oldForeinKey, 'Showfield' ) */ ?>
