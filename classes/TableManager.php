@@ -1,29 +1,56 @@
 <?php declare(strict_types=1);
+/**
+ * DON'T CHANGE THIS FILE!!
+ */
+if( !defined('ROOT') ) die("Cannot run this file");
 
 /**
  * TableManager abstract class for CRUD (Create Retrieve Update Delete actions)
  * use with SomeTableManager extends TableManager
  *
- * for the ...newvalues make sure to put them in the same order as the columns in the table!
+ * for the fieldNames in the instructor make sure to put them in the same order as the columns in the table!
+ * the keys used for the id in the update and delete form have to be called id!
  * 
- * only update must be defined as we don't know the exact colum nnames (replace col1, col2 etc.)
+ * public function makeSelect() to create a <select><option>
+ * static function makeDeleteForm() to create a form for a delete request
+ * public function handleReqeust() to handle basic actions create,update,delete
  * 
  */
 abstract class TableManager
 {
-    abstract public function update( int|string $id, ...$new_values ): void;
-    /* change col1 = ?, col2 = ?, ...  with the proper fields in the right order
+    private function buildValuelist(): array
     {
-        try {
-            $stmt = $this->pdo->prepare( "UPDATE {$this->tableName} SET col1 = ?, col2 = ?, ... WHERE {$this->primaryKeyName} = ?" );
-            // set id as last element
-            array_push( $new_values, $id ); // put the id at the end of the array of values
-            $stmt->execute( $new_values );
-        } catch ( PDOException $e ) {
-            trigger_error( "Fehler beim Ändern der Tabelle: " . $e->getMessage(), E_USER_ERROR );
-        }
+        return array_map(
+            fn( $fieldName ) => $_POST[ $fieldName ],
+            array_values( $this->fieldNames )
+        );
     }
-    */
+    public function createAction(): void
+    {
+        checkParam( array_values( $this->fieldNames ), $_POST );
+        // buil
+        $newValues = $this->buildValuelist();
+        $this->create( ...$newValues );
+    }
+
+    public function updateAction(): void
+    {
+        // check for all fields and an 'id'
+        checkParam( array_merge(
+            [ 'id' ],
+            array_values( $this->fieldNames )
+        ), $_POST );
+
+        $newValues = $this->buildValuelist();
+        $this->update( $_POST['id'], ...$newValues );
+    }
+
+    public function deleteAction(): void
+    {
+        checkParam( [ 'id' ], $_POST );
+        $this->delete( $_POST['id'] );
+    }
+
     protected $pdo;
 
     /**
@@ -31,10 +58,10 @@ abstract class TableManager
      */
     public function __construct(
         readonly string $tableName,
-        readonly array|string $primaryKeyName )
-    {
+        readonly array|string $primaryKeyName,
+        readonly array $fieldNames
+    ) {
         try {
-
             $this->pdo = new PDO( SETTINGS['db']['dsn'], SETTINGS['db']['user'], SETTINGS['db']['pass'] );
             $this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION ); // Fehlermodus auf Ausnahmen setzen
             $this->pdo->setAttribute( PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC ); // Standard-Abfrageergebnismodus auf assoziatives Array setzen
@@ -83,7 +110,7 @@ abstract class TableManager
     public function findAll( string $order = null, string $where = "0=0" ): Generator
     {
         try {
-            $stmt = $this->pdo->prepare( "SELECT * FROM `{$this->tableName}` WHERE ($where) " . ($order?"ORDER BY $order":) );
+            $stmt = $this->pdo->prepare( "SELECT * FROM `{$this->tableName}` WHERE ($where) " . ( $order ? "ORDER BY $order" : "" ) );
             $stmt->execute();
             while( $row = $stmt->fetch() ) {
                 yield ( $row );
@@ -93,7 +120,20 @@ abstract class TableManager
         }
     }
 
+    public function update( int|string $id, ...$new_values )
+    {
+        try {
+            $assignmentList = '`' . implode( '`=?, `', array_keys( $this->fieldNames ) ) . '`=?';
+            $query          = "UPDATE {$this->tableName} SET $assignmentList WHERE {$this->primaryKeyName} = ?";
+            $stmt           = $this->pdo->prepare( $query );
+            // set id as last element
+            array_push( $new_values, $id ); // put the id at the end of the array of values
+            $stmt->execute( $new_values );
 
+        } catch ( PDOException $e ) {
+            trigger_error( "Fehler beim Löschen des Faches: " . $e->getMessage(), E_USER_ERROR );
+        }
+    }
 
     /**
      * Delete record by ID
@@ -111,17 +151,43 @@ abstract class TableManager
     }
 
     /**
-     * @param $selected_id the value of the selectedoption
-     * @param $show the name of the attribute that should be shown in the list
-     * 
-     * @return string
+     * handle a request based on action, there are three options, create, update, delete
+     * The functions returns to '/' and exist, or triggers and error for unknown actions.
      */
-    public function makeSelect( int $selected_id, string $show ): string
+    public function handleRequest()
+    {
+        switch($_POST['action']) {
+            case 'create':
+                $this->createAction();
+                break;
+            case 'update':
+                $this->updateAction();
+                break;
+            case 'delete':
+                $this->deleteAction();
+                break;
+            default:
+                trigger_error( 'unknown action ', E_USER_ERROR );
+        }
+        // Gehe zurück zum hauptfenster
+        header( "Location: /" );
+        exit();
+    }
+
+    /**
+     * @param $selected_id the value of the option currently selected, foreign key value
+     * @param $show the name of the attribute that should be shown in the list
+     * @param $fieldName name of the form field, if empty use the PK-name as fieldName
+     * 
+     * @return string HTML <select>-tag with <option>-tag for each record ordered by $show
+     */
+    public function makeSelect( int $selected_id, string $show, string $fieldName = null ): string
     {
         try {
-            $stmt = $this->pdo->prepare( "SELECT `{$this->primaryKeyName}`, `$show` FROM `{$this->tableName}` ORDER BY `$show`" );
+            $fieldName = $fieldName ?? $this->primaryKeyName;
+            $stmt      = $this->pdo->prepare( "SELECT `{$this->primaryKeyName}`, `$show` FROM `{$this->tableName}` ORDER BY `$show`" );
             $stmt->execute();
-            $result = "<select name='{$this->primaryKeyName}'>";
+            $result = "<select name='{$fieldName}'>";
             $result .= "<option value='0'>";
 
             while( $row = $stmt->fetch() ) {
@@ -139,14 +205,15 @@ abstract class TableManager
      * Create a form the sends a delete action for a fach table
      * @param $id_name the name of form variable to hold the key
      * @param $id the value of the PK that will be deleted
-     * 
+     * @param $label button text, 'Delete' when ommitted
      */
-    public static function makeDeleteForm( string $id_name, int|string $id ): void
+    public static function makeDeleteForm( string $id_name, int|string $id, string $label = 'Delete' ): void
     {
         ?>
-        <form method="POST" action="./fach-handler.php">
+        <form method="POST" action="./fach-action-handler.php">
             <input type="hidden" name="<?= $id_name ?>" value="<?= $id ?>">
-            <button name="action" value="delete">Delete</button>
-        </form> <?php
+            <button name="action" value="delete"><?= $label ?></button>
+        </form>
+        <?php
     }
 }
