@@ -8,9 +8,10 @@ Template project for easy developement
 ### constructor
 
 Parameter
- * tablename
- * primary key name
- * assoc array of column => form-field-name
+
+* tablename
+* primary key name
+* assoc array of column => form-field-name
 
 The columns are escaped with ` the form-field-name is used in generated forms
   
@@ -61,8 +62,8 @@ class MyableManager extends TableManager
       'tablename',
       'pk-column-name',
       [
-        'col1' => 'col1-field',
-        'col2' => 'col2-field'
+        'col1' => 'col1-form-fieldname',
+        'col2' => 'col2-form-fieldname'
       ]
     );
   }
